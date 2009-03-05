@@ -211,6 +211,39 @@ public class ComponentDescriptor extends org.exolab.castor.xml.util.XMLClassDesc
         { //-- local scope
         }
         desc.setValidator(fieldValidator);
+        //-- _configcursors
+        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(nl.fmc.configuration.Configcursors.class, "_configcursors", "configcursors", org.exolab.castor.xml.NodeType.Element);
+        handler = new org.exolab.castor.xml.XMLFieldHandler() {
+            public java.lang.Object getValue( java.lang.Object object ) 
+                throws IllegalStateException
+            {
+                Component target = (Component) object;
+                return target.getConfigcursors();
+            }
+            public void setValue( java.lang.Object object, java.lang.Object value) 
+                throws IllegalStateException, IllegalArgumentException
+            {
+                try {
+                    Component target = (Component) object;
+                    target.setConfigcursors( (nl.fmc.configuration.Configcursors) value);
+                }
+                catch (java.lang.Exception ex) {
+                    throw new IllegalStateException(ex.toString());
+                }
+            }
+            public java.lang.Object newInstance( java.lang.Object parent ) {
+                return new nl.fmc.configuration.Configcursors();
+            }
+        };
+        desc.setHandler(handler);
+        desc.setMultivalued(false);
+        addFieldDescriptor(desc);
+        
+        //-- validation code for: _configcursors
+        fieldValidator = new org.exolab.castor.xml.FieldValidator();
+        { //-- local scope
+        }
+        desc.setValidator(fieldValidator);
         //-- _configstyles
         desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(nl.fmc.configuration.Configstyles.class, "_configstyles", "configstyles", org.exolab.castor.xml.NodeType.Element);
         handler = new org.exolab.castor.xml.XMLFieldHandler() {

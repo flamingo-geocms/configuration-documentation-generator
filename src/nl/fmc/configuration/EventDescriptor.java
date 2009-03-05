@@ -62,45 +62,6 @@ public class EventDescriptor extends org.exolab.castor.xml.util.XMLClassDescript
         org.exolab.castor.xml.FieldValidator               fieldValidator = null;
         //-- initialize attribute descriptors
         
-        //-- _name
-        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.lang.String.class, "_name", "name", org.exolab.castor.xml.NodeType.Attribute);
-        desc.setImmutable(true);
-        handler = new org.exolab.castor.xml.XMLFieldHandler() {
-            public java.lang.Object getValue( java.lang.Object object ) 
-                throws IllegalStateException
-            {
-                Event target = (Event) object;
-                return target.getName();
-            }
-            public void setValue( java.lang.Object object, java.lang.Object value) 
-                throws IllegalStateException, IllegalArgumentException
-            {
-                try {
-                    Event target = (Event) object;
-                    target.setName( (java.lang.String) value);
-                }
-                catch (java.lang.Exception ex) {
-                    throw new IllegalStateException(ex.toString());
-                }
-            }
-            public java.lang.Object newInstance( java.lang.Object parent ) {
-                return null;
-            }
-        };
-        desc.setHandler(handler);
-        desc.setRequired(true);
-        desc.setMultivalued(false);
-        addFieldDescriptor(desc);
-        
-        //-- validation code for: _name
-        fieldValidator = new org.exolab.castor.xml.FieldValidator();
-        fieldValidator.setMinOccurs(1);
-        { //-- local scope
-            org.exolab.castor.xml.validators.StringValidator typeValidator = new org.exolab.castor.xml.validators.StringValidator();
-            typeValidator.setWhiteSpace("preserve");
-            fieldValidator.setValidator(typeValidator);
-        }
-        desc.setValidator(fieldValidator);
         //-- initialize element descriptors
         
         //-- _parameterList
@@ -279,6 +240,45 @@ public class EventDescriptor extends org.exolab.castor.xml.util.XMLClassDescript
         
         //-- validation code for: _usage
         fieldValidator = new org.exolab.castor.xml.FieldValidator();
+        { //-- local scope
+            org.exolab.castor.xml.validators.StringValidator typeValidator = new org.exolab.castor.xml.validators.StringValidator();
+            typeValidator.setWhiteSpace("preserve");
+            fieldValidator.setValidator(typeValidator);
+        }
+        desc.setValidator(fieldValidator);
+        //-- _name
+        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.lang.String.class, "_name", "name", org.exolab.castor.xml.NodeType.Element);
+        desc.setImmutable(true);
+        handler = new org.exolab.castor.xml.XMLFieldHandler() {
+            public java.lang.Object getValue( java.lang.Object object ) 
+                throws IllegalStateException
+            {
+                Event target = (Event) object;
+                return target.getName();
+            }
+            public void setValue( java.lang.Object object, java.lang.Object value) 
+                throws IllegalStateException, IllegalArgumentException
+            {
+                try {
+                    Event target = (Event) object;
+                    target.setName( (java.lang.String) value);
+                }
+                catch (java.lang.Exception ex) {
+                    throw new IllegalStateException(ex.toString());
+                }
+            }
+            public java.lang.Object newInstance( java.lang.Object parent ) {
+                return null;
+            }
+        };
+        desc.setHandler(handler);
+        desc.setRequired(true);
+        desc.setMultivalued(false);
+        addFieldDescriptor(desc);
+        
+        //-- validation code for: _name
+        fieldValidator = new org.exolab.castor.xml.FieldValidator();
+        fieldValidator.setMinOccurs(1);
         { //-- local scope
             org.exolab.castor.xml.validators.StringValidator typeValidator = new org.exolab.castor.xml.validators.StringValidator();
             typeValidator.setWhiteSpace("preserve");

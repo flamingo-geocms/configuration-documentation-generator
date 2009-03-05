@@ -48,6 +48,11 @@ public class Component implements java.io.Serializable {
     private nl.fmc.configuration.Configstrings _configstrings;
 
     /**
+     * Field _configcursors
+     */
+    private nl.fmc.configuration.Configcursors _configcursors;
+
+    /**
      * Field _configstyles
      */
     private nl.fmc.configuration.Configstyles _configstyles;
@@ -237,6 +242,17 @@ public class Component implements java.io.Serializable {
     {
         return _changeList.size();
     } //-- int getChangeCount() 
+
+    /**
+     * Returns the value of field 'configcursors'.
+     * 
+     * @return Configcursors
+     * @return the value of field 'configcursors'.
+     */
+    public nl.fmc.configuration.Configcursors getConfigcursors()
+    {
+        return this._configcursors;
+    } //-- nl.fmc.configuration.Configcursors getConfigcursors() 
 
     /**
      * Returns the value of field 'configstrings'.
@@ -481,6 +497,16 @@ public class Component implements java.io.Serializable {
             _changeList.add(changeArray[i]);
         }
     } //-- void setChange(java.lang.String) 
+
+    /**
+     * Sets the value of field 'configcursors'.
+     * 
+     * @param configcursors the value of field 'configcursors'.
+     */
+    public void setConfigcursors(nl.fmc.configuration.Configcursors configcursors)
+    {
+        this._configcursors = configcursors;
+    } //-- void setConfigcursors(nl.fmc.configuration.Configcursors) 
 
     /**
      * Sets the value of field 'configstrings'.

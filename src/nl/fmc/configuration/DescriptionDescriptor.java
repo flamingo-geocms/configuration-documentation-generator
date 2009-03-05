@@ -8,11 +8,11 @@
 package nl.fmc.configuration;
 
 /**
- * Class ConfigstringDescriptor.
+ * Class DescriptionDescriptor.
  * 
  * @version $Revision$ $Date$
  */
-public class ConfigstringDescriptor extends org.exolab.castor.xml.util.XMLClassDescriptorImpl {
+public class DescriptionDescriptor extends org.exolab.castor.xml.util.XMLClassDescriptorImpl {
 
 
       //--------------------------/
@@ -49,98 +49,55 @@ public class ConfigstringDescriptor extends org.exolab.castor.xml.util.XMLClassD
      //- Constructors -/
     //----------------/
 
-    public ConfigstringDescriptor() 
+    public DescriptionDescriptor() 
      {
         super();
-        xmlName = "configstring";
+        xmlName = "description";
         elementDefinition = true;
-        
-        //-- set grouping compositor
-        setCompositorAsSequence();
         org.exolab.castor.xml.util.XMLFieldDescriptorImpl  desc           = null;
         org.exolab.castor.mapping.FieldHandler             handler        = null;
         org.exolab.castor.xml.FieldValidator               fieldValidator = null;
+        //-- _content
+        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.lang.String.class, "_content", "PCDATA", org.exolab.castor.xml.NodeType.Text);
+        desc.setImmutable(true);
+        handler = new org.exolab.castor.xml.XMLFieldHandler() {
+            public java.lang.Object getValue( java.lang.Object object ) 
+                throws IllegalStateException
+            {
+                Description target = (Description) object;
+                return target.getContent();
+            }
+            public void setValue( java.lang.Object object, java.lang.Object value) 
+                throws IllegalStateException, IllegalArgumentException
+            {
+                try {
+                    Description target = (Description) object;
+                    target.setContent( (java.lang.String) value);
+                }
+                catch (java.lang.Exception ex) {
+                    throw new IllegalStateException(ex.toString());
+                }
+            }
+            public java.lang.Object newInstance( java.lang.Object parent ) {
+                return null;
+            }
+        };
+        desc.setHandler(handler);
+        addFieldDescriptor(desc);
+        
+        //-- validation code for: _content
+        fieldValidator = new org.exolab.castor.xml.FieldValidator();
+        { //-- local scope
+            org.exolab.castor.xml.validators.StringValidator typeValidator = new org.exolab.castor.xml.validators.StringValidator();
+            typeValidator.setWhiteSpace("preserve");
+            fieldValidator.setValidator(typeValidator);
+        }
+        desc.setValidator(fieldValidator);
         //-- initialize attribute descriptors
         
         //-- initialize element descriptors
         
-        //-- _description
-        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.lang.String.class, "_description", "description", org.exolab.castor.xml.NodeType.Element);
-        desc.setImmutable(true);
-        handler = new org.exolab.castor.xml.XMLFieldHandler() {
-            public java.lang.Object getValue( java.lang.Object object ) 
-                throws IllegalStateException
-            {
-                Configstring target = (Configstring) object;
-                return target.getDescription();
-            }
-            public void setValue( java.lang.Object object, java.lang.Object value) 
-                throws IllegalStateException, IllegalArgumentException
-            {
-                try {
-                    Configstring target = (Configstring) object;
-                    target.setDescription( (java.lang.String) value);
-                }
-                catch (java.lang.Exception ex) {
-                    throw new IllegalStateException(ex.toString());
-                }
-            }
-            public java.lang.Object newInstance( java.lang.Object parent ) {
-                return null;
-            }
-        };
-        desc.setHandler(handler);
-        desc.setMultivalued(false);
-        addFieldDescriptor(desc);
-        
-        //-- validation code for: _description
-        fieldValidator = new org.exolab.castor.xml.FieldValidator();
-        { //-- local scope
-            org.exolab.castor.xml.validators.StringValidator typeValidator = new org.exolab.castor.xml.validators.StringValidator();
-            typeValidator.setWhiteSpace("preserve");
-            fieldValidator.setValidator(typeValidator);
-        }
-        desc.setValidator(fieldValidator);
-        //-- _name
-        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.lang.String.class, "_name", "name", org.exolab.castor.xml.NodeType.Element);
-        desc.setImmutable(true);
-        handler = new org.exolab.castor.xml.XMLFieldHandler() {
-            public java.lang.Object getValue( java.lang.Object object ) 
-                throws IllegalStateException
-            {
-                Configstring target = (Configstring) object;
-                return target.getName();
-            }
-            public void setValue( java.lang.Object object, java.lang.Object value) 
-                throws IllegalStateException, IllegalArgumentException
-            {
-                try {
-                    Configstring target = (Configstring) object;
-                    target.setName( (java.lang.String) value);
-                }
-                catch (java.lang.Exception ex) {
-                    throw new IllegalStateException(ex.toString());
-                }
-            }
-            public java.lang.Object newInstance( java.lang.Object parent ) {
-                return null;
-            }
-        };
-        desc.setHandler(handler);
-        desc.setRequired(true);
-        desc.setMultivalued(false);
-        addFieldDescriptor(desc);
-        
-        //-- validation code for: _name
-        fieldValidator = new org.exolab.castor.xml.FieldValidator();
-        fieldValidator.setMinOccurs(1);
-        { //-- local scope
-            org.exolab.castor.xml.validators.StringValidator typeValidator = new org.exolab.castor.xml.validators.StringValidator();
-            typeValidator.setWhiteSpace("preserve");
-            fieldValidator.setValidator(typeValidator);
-        }
-        desc.setValidator(fieldValidator);
-    } //-- nl.fmc.configuration.ConfigstringDescriptor()
+    } //-- nl.fmc.configuration.DescriptionDescriptor()
 
 
       //-----------/
@@ -192,7 +149,7 @@ public class ConfigstringDescriptor extends org.exolab.castor.xml.util.XMLClassD
      */
     public java.lang.Class getJavaClass()
     {
-        return nl.fmc.configuration.Configstring.class;
+        return nl.fmc.configuration.Description.class;
     } //-- java.lang.Class getJavaClass() 
 
     /**

@@ -8,11 +8,11 @@
 package nl.fmc.configuration;
 
 /**
- * Class ConfigstringDescriptor.
+ * Class ConfigcursorDescriptor.
  * 
  * @version $Revision$ $Date$
  */
-public class ConfigstringDescriptor extends org.exolab.castor.xml.util.XMLClassDescriptorImpl {
+public class ConfigcursorDescriptor extends org.exolab.castor.xml.util.XMLClassDescriptorImpl {
 
 
       //--------------------------/
@@ -49,10 +49,10 @@ public class ConfigstringDescriptor extends org.exolab.castor.xml.util.XMLClassD
      //- Constructors -/
     //----------------/
 
-    public ConfigstringDescriptor() 
+    public ConfigcursorDescriptor() 
      {
         super();
-        xmlName = "configstring";
+        xmlName = "configcursor";
         elementDefinition = true;
         
         //-- set grouping compositor
@@ -71,14 +71,14 @@ public class ConfigstringDescriptor extends org.exolab.castor.xml.util.XMLClassD
             public java.lang.Object getValue( java.lang.Object object ) 
                 throws IllegalStateException
             {
-                Configstring target = (Configstring) object;
+                Configcursor target = (Configcursor) object;
                 return target.getDescription();
             }
             public void setValue( java.lang.Object object, java.lang.Object value) 
                 throws IllegalStateException, IllegalArgumentException
             {
                 try {
-                    Configstring target = (Configstring) object;
+                    Configcursor target = (Configcursor) object;
                     target.setDescription( (java.lang.String) value);
                 }
                 catch (java.lang.Exception ex) {
@@ -108,14 +108,14 @@ public class ConfigstringDescriptor extends org.exolab.castor.xml.util.XMLClassD
             public java.lang.Object getValue( java.lang.Object object ) 
                 throws IllegalStateException
             {
-                Configstring target = (Configstring) object;
+                Configcursor target = (Configcursor) object;
                 return target.getName();
             }
             public void setValue( java.lang.Object object, java.lang.Object value) 
                 throws IllegalStateException, IllegalArgumentException
             {
                 try {
-                    Configstring target = (Configstring) object;
+                    Configcursor target = (Configcursor) object;
                     target.setName( (java.lang.String) value);
                 }
                 catch (java.lang.Exception ex) {
@@ -140,7 +140,7 @@ public class ConfigstringDescriptor extends org.exolab.castor.xml.util.XMLClassD
             fieldValidator.setValidator(typeValidator);
         }
         desc.setValidator(fieldValidator);
-    } //-- nl.fmc.configuration.ConfigstringDescriptor()
+    } //-- nl.fmc.configuration.ConfigcursorDescriptor()
 
 
       //-----------/
@@ -192,7 +192,7 @@ public class ConfigstringDescriptor extends org.exolab.castor.xml.util.XMLClassD
      */
     public java.lang.Class getJavaClass()
     {
-        return nl.fmc.configuration.Configstring.class;
+        return nl.fmc.configuration.Configcursor.class;
     } //-- java.lang.Class getJavaClass() 
 
     /**

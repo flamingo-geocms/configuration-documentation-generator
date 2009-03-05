@@ -3,8 +3,6 @@
  *
  * Created on 26 februari 2009, 19:02
  *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
  */
 
 package cdg;
@@ -19,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import nl.fmc.configuration.Attribute;
 import nl.fmc.configuration.Component;
+import nl.fmc.configuration.Configcursor;
+import nl.fmc.configuration.Configcursors;
 import nl.fmc.configuration.Configstring;
 import nl.fmc.configuration.Configstrings;
 import nl.fmc.configuration.Configstyle;
@@ -35,7 +35,8 @@ import org.exolab.castor.xml.Marshaller;
 
 /**
  *
- * @author Roy
+ * @author Roy Braam
+ * RoyBraam@B3partners.nl
  */
 public class AsConfigDocParser {
     private static String componentType = "@component";
@@ -50,6 +51,7 @@ public class AsConfigDocParser {
     private static String configstringType= "@configstring";
     private static String configstyleType= "@configstyle";
     private static String versionType="@version";
+    private static String configcursorType="@configcursor";
     private File sourceDir;
     private File destDir;
     /** Creates a new instance of AsConfigDocParser */
@@ -99,7 +101,7 @@ public class AsConfigDocParser {
                 ex.printStackTrace();                
             }
         }else{
-            System.out.println("Can't create component: "+dest.getAbsolutePath());
+            System.out.println("Can't create xml: "+dest.getAbsolutePath());
             doDelete=true;
         }
         writer.close();
@@ -194,7 +196,24 @@ public class AsConfigDocParser {
                 fd.getComponent().setConfigstyles(new Configstyles());
             }
             fd.getComponent().getConfigstyles().addConfigstyle(cs);
-        }        
+        }    
+        list= getCommentOfObjects(rows,configcursorType,false);
+        for (int c=0; c < list.size(); c++){
+            Configcursor cs = new Configcursor();
+            String configcursor= (String) list.get(c);
+            configcursor=configcursor.trim();
+            String name=configcursor.split(" ")[0];
+            String descr="";
+            if (name.length()+1<configcursor.length()){
+                descr=configcursor.substring(name.length()+1);
+            }
+            cs.setName(name);
+            cs.setDescription(descr);
+            if (fd.getComponent().getConfigcursors()==null){
+                fd.getComponent().setConfigcursors(new Configcursors());
+            }
+            fd.getComponent().getConfigcursors().addConfigcursor(cs);
+        }    
     }
     /**Adds a tag to the component.*/
     private void addTag(ArrayList rows, Flamingodoc fd) {

@@ -15,11 +15,11 @@ import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
 
 /**
- * Class Configstyle.
+ * Class Configcursor.
  * 
  * @version $Revision$ $Date$
  */
-public class Configstyle implements java.io.Serializable {
+public class Configcursor implements java.io.Serializable {
 
 
       //--------------------------/
@@ -41,10 +41,10 @@ public class Configstyle implements java.io.Serializable {
      //- Constructors -/
     //----------------/
 
-    public Configstyle() 
+    public Configcursor() 
      {
         super();
-    } //-- nl.fmc.configuration.Configstyle()
+    } //-- nl.fmc.configuration.Configcursor()
 
 
       //-----------/
@@ -145,13 +145,13 @@ public class Configstyle implements java.io.Serializable {
      * 
      * 
      * @param reader
-     * @return Configstyle
+     * @return Configcursor
      */
-    public static nl.fmc.configuration.Configstyle unmarshal(java.io.Reader reader)
+    public static nl.fmc.configuration.Configcursor unmarshal(java.io.Reader reader)
         throws org.exolab.castor.xml.MarshalException, org.exolab.castor.xml.ValidationException
     {
-        return (nl.fmc.configuration.Configstyle) Unmarshaller.unmarshal(nl.fmc.configuration.Configstyle.class, reader);
-    } //-- nl.fmc.configuration.Configstyle unmarshal(java.io.Reader) 
+        return (nl.fmc.configuration.Configcursor) Unmarshaller.unmarshal(nl.fmc.configuration.Configcursor.class, reader);
+    } //-- nl.fmc.configuration.Configcursor unmarshal(java.io.Reader) 
 
     /**
      * Method validate

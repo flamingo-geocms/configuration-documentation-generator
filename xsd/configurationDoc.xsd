@@ -53,12 +53,8 @@
 			<xs:sequence>
 				<xs:element name="type" type="xs:string" minOccurs="0"/>
 				<xs:element name="description" type="xs:string" minOccurs="0"/>
+				<xs:element name="name" type="xs:string"/>
 			</xs:sequence>
-			<xs:attribute name="name" use="required">
-				<xs:simpleType>
-					<xs:restriction base="xs:string"/>
-				</xs:simpleType>
-			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="name">
@@ -266,8 +262,8 @@
 				<xs:element name="description" type="xs:string" minOccurs="0"/>
 				<xs:element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
 				<xs:element name="return" type="xs:string" minOccurs="0"/>
+				<xs:element name="name" type="xs:string"/>
 			</xs:sequence>
-			<xs:attribute name="name" type="xs:string" use="required"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="hierarchy" type="xs:string"/>
@@ -298,12 +294,8 @@
 				<xs:element name="returntype" type="xs:string" minOccurs="0"/>
 				<xs:element name="arguments" type="xs:string" minOccurs="0"/>
 				<xs:element name="usage" type="xs:string" minOccurs="0"/>
+				<xs:element name="name" type="xs:string"/>
 			</xs:sequence>
-			<xs:attribute name="name" use="required">
-				<xs:simpleType>
-					<xs:restriction base="xs:string"/>
-				</xs:simpleType>
-			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="description" type="xs:string"/>
@@ -321,24 +313,16 @@
 				<xs:element name="description" type="xs:string" minOccurs="0"/>
 				<xs:element name="hierarchy" type="xs:string" minOccurs="0"/>
 				<xs:element name="example" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="name" type="xs:string"/>
 			</xs:sequence>
-			<xs:attribute name="name" use="required">
-				<xs:simpleType>
-					<xs:restriction base="xs:string"/>
-				</xs:simpleType>
-			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="configstyle">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="description" type="xs:string" minOccurs="0"/>
+				<xs:element name="name" type="xs:string"/>
 			</xs:sequence>
-			<xs:attribute name="name" use="required">
-				<xs:simpleType>
-					<xs:restriction base="xs:string"/>
-				</xs:simpleType>
-			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="component">
@@ -354,8 +338,22 @@
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="description" type="xs:string" minOccurs="0"/>
+										<xs:element name="name" type="xs:string"/>
 									</xs:sequence>
-									<xs:attribute name="name" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="configcursors" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="configcursor" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="description" type="xs:string" minOccurs="0"/>
+										<xs:element name="name" type="xs:string"/>
+									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>

@@ -28,11 +28,6 @@ public class Event implements java.io.Serializable {
     //--------------------------/
 
     /**
-     * Field _name
-     */
-    private java.lang.String _name;
-
-    /**
      * Field _parameterList
      */
     private java.util.ArrayList _parameterList;
@@ -56,6 +51,11 @@ public class Event implements java.io.Serializable {
      * Field _usage
      */
     private java.lang.String _usage;
+
+    /**
+     * Field _name
+     */
+    private java.lang.String _name;
 
 
       //----------------/

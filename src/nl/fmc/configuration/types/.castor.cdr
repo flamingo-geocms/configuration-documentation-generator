@@ -1,0 +1,6 @@
+#Thu Mar 05 23:33:38 CET 2009
+nl.fmc.configuration.types.TitleType=nl.fmc.configuration.types.TitleTypeDescriptor
+nl.fmc.configuration.types.TypeType=nl.fmc.configuration.types.TypeTypeDescriptor
+nl.fmc.configuration.types.SeeType=nl.fmc.configuration.types.SeeTypeDescriptor
+nl.fmc.configuration.types.NameType=nl.fmc.configuration.types.NameTypeDescriptor
+nl.fmc.configuration.types.ReturntypeType=nl.fmc.configuration.types.ReturntypeTypeDescriptor

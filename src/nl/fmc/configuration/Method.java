@@ -28,11 +28,6 @@ public class Method implements java.io.Serializable {
     //--------------------------/
 
     /**
-     * Field _name
-     */
-    private java.lang.String _name;
-
-    /**
      * Field _usage
      */
     private java.lang.String _usage;
@@ -66,6 +61,11 @@ public class Method implements java.io.Serializable {
      * Field _return
      */
     private java.lang.String _return;
+
+    /**
+     * Field _name
+     */
+    private java.lang.String _name;
 
 
       //----------------/

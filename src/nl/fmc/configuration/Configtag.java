@@ -28,11 +28,6 @@ public class Configtag implements java.io.Serializable {
     //--------------------------/
 
     /**
-     * Field _name
-     */
-    private java.lang.String _name;
-
-    /**
      * Field _attributeList
      */
     private java.util.ArrayList _attributeList;
@@ -51,6 +46,11 @@ public class Configtag implements java.io.Serializable {
      * Field _exampleList
      */
     private java.util.ArrayList _exampleList;
+
+    /**
+     * Field _name
+     */
+    private java.lang.String _name;
 
 
       //----------------/

@@ -15,11 +15,11 @@ import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
 
 /**
- * Class Configstyle.
+ * Class Description.
  * 
  * @version $Revision$ $Date$
  */
-public class Configstyle implements java.io.Serializable {
+public class Description implements java.io.Serializable {
 
 
       //--------------------------/
@@ -27,24 +27,20 @@ public class Configstyle implements java.io.Serializable {
     //--------------------------/
 
     /**
-     * Field _description
+     * internal content storage
      */
-    private java.lang.String _description;
-
-    /**
-     * Field _name
-     */
-    private java.lang.String _name;
+    private java.lang.String _content = "";
 
 
       //----------------/
      //- Constructors -/
     //----------------/
 
-    public Configstyle() 
+    public Description() 
      {
         super();
-    } //-- nl.fmc.configuration.Configstyle()
+        setContent("");
+    } //-- nl.fmc.configuration.Description()
 
 
       //-----------/
@@ -52,26 +48,16 @@ public class Configstyle implements java.io.Serializable {
     //-----------/
 
     /**
-     * Returns the value of field 'description'.
+     * Returns the value of field 'content'. The field 'content'
+     * has the following description: internal content storage
      * 
      * @return String
-     * @return the value of field 'description'.
+     * @return the value of field 'content'.
      */
-    public java.lang.String getDescription()
+    public java.lang.String getContent()
     {
-        return this._description;
-    } //-- java.lang.String getDescription() 
-
-    /**
-     * Returns the value of field 'name'.
-     * 
-     * @return String
-     * @return the value of field 'name'.
-     */
-    public java.lang.String getName()
-    {
-        return this._name;
-    } //-- java.lang.String getName() 
+        return this._content;
+    } //-- java.lang.String getContent() 
 
     /**
      * Method isValid
@@ -120,24 +106,15 @@ public class Configstyle implements java.io.Serializable {
     } //-- void marshal(org.xml.sax.ContentHandler) 
 
     /**
-     * Sets the value of field 'description'.
+     * Sets the value of field 'content'. The field 'content' has
+     * the following description: internal content storage
      * 
-     * @param description the value of field 'description'.
+     * @param content the value of field 'content'.
      */
-    public void setDescription(java.lang.String description)
+    public void setContent(java.lang.String content)
     {
-        this._description = description;
-    } //-- void setDescription(java.lang.String) 
-
-    /**
-     * Sets the value of field 'name'.
-     * 
-     * @param name the value of field 'name'.
-     */
-    public void setName(java.lang.String name)
-    {
-        this._name = name;
-    } //-- void setName(java.lang.String) 
+        this._content = content;
+    } //-- void setContent(java.lang.String) 
 
     /**
      * Method unmarshal
@@ -145,13 +122,13 @@ public class Configstyle implements java.io.Serializable {
      * 
      * 
      * @param reader
-     * @return Configstyle
+     * @return Description
      */
-    public static nl.fmc.configuration.Configstyle unmarshal(java.io.Reader reader)
+    public static nl.fmc.configuration.Description unmarshal(java.io.Reader reader)
         throws org.exolab.castor.xml.MarshalException, org.exolab.castor.xml.ValidationException
     {
-        return (nl.fmc.configuration.Configstyle) Unmarshaller.unmarshal(nl.fmc.configuration.Configstyle.class, reader);
-    } //-- nl.fmc.configuration.Configstyle unmarshal(java.io.Reader) 
+        return (nl.fmc.configuration.Description) Unmarshaller.unmarshal(nl.fmc.configuration.Description.class, reader);
+    } //-- nl.fmc.configuration.Description unmarshal(java.io.Reader) 
 
     /**
      * Method validate
