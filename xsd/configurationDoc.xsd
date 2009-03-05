@@ -345,6 +345,8 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="name" type="xs:string"/>
+				<xs:element name="change" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="version" type="xs:string" minOccurs="0"/>
 				<xs:element name="configstrings" minOccurs="0">
 					<xs:complexType>
 						<xs:sequence>
@@ -378,12 +380,8 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="description" type="xs:string" minOccurs="0"/>
+				<xs:element name="name" type="xs:string"/>
 			</xs:sequence>
-			<xs:attribute name="name" use="required">
-				<xs:simpleType>
-					<xs:restriction base="xs:string"/>
-				</xs:simpleType>
-			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="arguments" type="xs:string"/>

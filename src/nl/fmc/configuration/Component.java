@@ -33,6 +33,16 @@ public class Component implements java.io.Serializable {
     private java.lang.String _name;
 
     /**
+     * Field _changeList
+     */
+    private java.util.ArrayList _changeList;
+
+    /**
+     * Field _version
+     */
+    private java.lang.String _version;
+
+    /**
      * Field _configstrings
      */
     private nl.fmc.configuration.Configstrings _configstrings;
@@ -75,6 +85,7 @@ public class Component implements java.io.Serializable {
     public Component() 
      {
         super();
+        _changeList = new java.util.ArrayList();
         _fileList = new java.util.ArrayList();
     } //-- nl.fmc.configuration.Component()
 
@@ -82,6 +93,33 @@ public class Component implements java.io.Serializable {
       //-----------/
      //- Methods -/
     //-----------/
+
+    /**
+     * Method addChange
+     * 
+     * 
+     * 
+     * @param vChange
+     */
+    public void addChange(java.lang.String vChange)
+        throws java.lang.IndexOutOfBoundsException
+    {
+        _changeList.add(vChange);
+    } //-- void addChange(java.lang.String) 
+
+    /**
+     * Method addChange
+     * 
+     * 
+     * 
+     * @param index
+     * @param vChange
+     */
+    public void addChange(int index, java.lang.String vChange)
+        throws java.lang.IndexOutOfBoundsException
+    {
+        _changeList.add(index, vChange);
+    } //-- void addChange(int, java.lang.String) 
 
     /**
      * Method addFile
@@ -111,6 +149,15 @@ public class Component implements java.io.Serializable {
     } //-- void addFile(int, java.lang.String) 
 
     /**
+     * Method clearChange
+     * 
+     */
+    public void clearChange()
+    {
+        _changeList.clear();
+    } //-- void clearChange() 
+
+    /**
      * Method clearFile
      * 
      */
@@ -118,6 +165,18 @@ public class Component implements java.io.Serializable {
     {
         _fileList.clear();
     } //-- void clearFile() 
+
+    /**
+     * Method enumerateChange
+     * 
+     * 
+     * 
+     * @return Enumeration
+     */
+    public java.util.Enumeration enumerateChange()
+    {
+        return Collections.enumeration(_changeList);
+    } //-- java.util.Enumeration enumerateChange() 
 
     /**
      * Method enumerateFile
@@ -130,6 +189,54 @@ public class Component implements java.io.Serializable {
     {
         return Collections.enumeration(_fileList);
     } //-- java.util.Enumeration enumerateFile() 
+
+    /**
+     * Method getChange
+     * 
+     * 
+     * 
+     * @param index
+     * @return String
+     */
+    public java.lang.String getChange(int index)
+        throws java.lang.IndexOutOfBoundsException
+    {
+        //-- check bounds for index
+        if ((index < 0) || (index >= _changeList.size())) {
+            throw new IndexOutOfBoundsException();
+        }
+        
+        return (String)_changeList.get(index);
+    } //-- java.lang.String getChange(int) 
+
+    /**
+     * Method getChange
+     * 
+     * 
+     * 
+     * @return String
+     */
+    public java.lang.String[] getChange()
+    {
+        int size = _changeList.size();
+        java.lang.String[] mArray = new java.lang.String[size];
+        for (int index = 0; index < size; index++) {
+            mArray[index] = (String)_changeList.get(index);
+        }
+        return mArray;
+    } //-- java.lang.String[] getChange() 
+
+    /**
+     * Method getChangeCount
+     * 
+     * 
+     * 
+     * @return int
+     */
+    public int getChangeCount()
+    {
+        return _changeList.size();
+    } //-- int getChangeCount() 
 
     /**
      * Returns the value of field 'configstrings'.
@@ -257,6 +364,17 @@ public class Component implements java.io.Serializable {
     } //-- java.lang.String getName() 
 
     /**
+     * Returns the value of field 'version'.
+     * 
+     * @return String
+     * @return the value of field 'version'.
+     */
+    public java.lang.String getVersion()
+    {
+        return this._version;
+    } //-- java.lang.String getVersion() 
+
+    /**
      * Method isValid
      * 
      * 
@@ -303,6 +421,20 @@ public class Component implements java.io.Serializable {
     } //-- void marshal(org.xml.sax.ContentHandler) 
 
     /**
+     * Method removeChange
+     * 
+     * 
+     * 
+     * @param vChange
+     * @return boolean
+     */
+    public boolean removeChange(java.lang.String vChange)
+    {
+        boolean removed = _changeList.remove(vChange);
+        return removed;
+    } //-- boolean removeChange(java.lang.String) 
+
+    /**
      * Method removeFile
      * 
      * 
@@ -315,6 +447,40 @@ public class Component implements java.io.Serializable {
         boolean removed = _fileList.remove(vFile);
         return removed;
     } //-- boolean removeFile(java.lang.String) 
+
+    /**
+     * Method setChange
+     * 
+     * 
+     * 
+     * @param index
+     * @param vChange
+     */
+    public void setChange(int index, java.lang.String vChange)
+        throws java.lang.IndexOutOfBoundsException
+    {
+        //-- check bounds for index
+        if ((index < 0) || (index >= _changeList.size())) {
+            throw new IndexOutOfBoundsException();
+        }
+        _changeList.set(index, vChange);
+    } //-- void setChange(int, java.lang.String) 
+
+    /**
+     * Method setChange
+     * 
+     * 
+     * 
+     * @param changeArray
+     */
+    public void setChange(java.lang.String[] changeArray)
+    {
+        //-- copy array
+        _changeList.clear();
+        for (int i = 0; i < changeArray.length; i++) {
+            _changeList.add(changeArray[i]);
+        }
+    } //-- void setChange(java.lang.String) 
 
     /**
      * Sets the value of field 'configstrings'.
@@ -419,6 +585,16 @@ public class Component implements java.io.Serializable {
     {
         this._name = name;
     } //-- void setName(java.lang.String) 
+
+    /**
+     * Sets the value of field 'version'.
+     * 
+     * @param version the value of field 'version'.
+     */
+    public void setVersion(java.lang.String version)
+    {
+        this._version = version;
+    } //-- void setVersion(java.lang.String) 
 
     /**
      * Method unmarshal

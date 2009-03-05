@@ -41,6 +41,7 @@ public class AsConfigDocParser {
     private static String componentType = "@component";
     private static String fileType = "@file";
     private static String tagType = "@tag";
+    private static String changeType = "@change";
     private static String attributeType = "@attr";
     private static String hierarchyType = "@hierarchy";
     private static String exampleType = "@example";
@@ -48,7 +49,7 @@ public class AsConfigDocParser {
     private static String returnType= "@return";
     private static String configstringType= "@configstring";
     private static String configstyleType= "@configstyle";
-    
+    private static String versionType="@version";
     private File sourceDir;
     private File destDir;
     /** Creates a new instance of AsConfigDocParser */
@@ -71,12 +72,7 @@ public class AsConfigDocParser {
             }
         }
     }
-    /**Creates the destination file.*/
-    /*public File createDestinationFile(File sourceFile){
-        String newDestPath= sourceFile.getAbsolutePath().replaceAll(sourceDir.getAbsolutePath(),"");
-        //newDestPath=destDir.getAbsolutePath()+newDestPath;
-        return new File(destDir.getAbsolutePath(),newDestPath);
-    }*/
+    
     /**Parses the .as file to a doc file with destination dest*/
     private void parseAsFile2Doc(File source, File dest) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(dest));
@@ -118,7 +114,7 @@ public class AsConfigDocParser {
         for (int i=0;i < rows.size() && !commentParsed; i++){
             String row=(String)rows.get(0);
             if (row.toLowerCase().indexOf(componentType)>0){
-                setComponentAttributes(rows,fd);
+                addComponent(rows,fd);
                 commentParsed=true;
             }else if (row.toLowerCase().indexOf(tagType)>0){
                 addTag(rows,fd);
@@ -142,25 +138,33 @@ public class AsConfigDocParser {
     }
     /**Create the component object
      */
-    private void setComponentAttributes(ArrayList rows,Flamingodoc fd){
+    private void addComponent(ArrayList rows,Flamingodoc fd){
         if (fd.getComponent()==null){
             fd.setComponent(new Component());
         }
-        ArrayList names=getCommentOfObjects(rows, componentType,true);
-        if (names.size()>0)
-            fd.getComponent().setName((String) names.get(0));
+        ArrayList list=getCommentOfObjects(rows, componentType,true);
+        if (list.size()>0)
+            fd.getComponent().setName((String) list.get(0));
         else
             fd.getComponent().setName("");
         String description = getDescription(rows);
         fd.getComponent().setDescription(description);
-        ArrayList files = getCommentOfObjects(rows,fileType,false);
-        for (int f=0; f < files.size(); f++){
-            fd.getComponent().addFile((String) files.get(f));
+        list = getCommentOfObjects(rows,fileType,false);
+        for (int f=0; f < list.size(); f++){
+            fd.getComponent().addFile((String) list.get(f));
+        }      
+        list= getCommentOfObjects(rows,changeType,false);
+        for (int c=0; c < list.size(); c++){
+            fd.getComponent().addChange((String)list.get(c));
+        }
+        list = getCommentOfObjects(rows,versionType,false);
+        if (list.size()>0){
+            fd.getComponent().setVersion((String) list.get(0));
         }        
-        ArrayList configstrings= getCommentOfObjects(rows,configstringType,false);
-        for (int c=0; c < configstrings.size(); c++){
+        list= getCommentOfObjects(rows,configstringType,false);
+        for (int c=0; c < list.size(); c++){
             Configstring cs = new Configstring();
-            String configstring= (String) configstrings.get(c);
+            String configstring= (String) list.get(c);
             configstring=configstring.trim();
             String name=configstring.split(" ")[0];
             String descr="";
@@ -174,10 +178,10 @@ public class AsConfigDocParser {
             }
             fd.getComponent().getConfigstrings().addConfigstring(cs);
         }
-        ArrayList configstyles= getCommentOfObjects(rows,configstyleType,false);
-        for (int c=0; c < configstyles.size(); c++){
+        list= getCommentOfObjects(rows,configstyleType,false);
+        for (int c=0; c < list.size(); c++){
             Configstyle cs = new Configstyle();
-            String configstyle= (String) configstyles.get(c);
+            String configstyle= (String) list.get(c);
             configstyle=configstyle.trim();
             String name=configstyle.split(" ")[0];
             String descr="";
@@ -196,20 +200,26 @@ public class AsConfigDocParser {
     private void addTag(ArrayList rows, Flamingodoc fd) {
         Configtag tag= new Configtag();
         //get and set the name
-        ArrayList tagNames =getCommentOfObjects(rows,tagType,true);
-        if (tagNames.size()>0){
-            tag.setName((String)tagNames.get(0));
+        ArrayList foundList =getCommentOfObjects(rows,tagType,true);
+        if (foundList.size()>0){
+            tag.setName((String)foundList.get(0));
         }
         //get and set the attributes
-        ArrayList foundList = getCommentOfObjects(rows,attributeType,false);
+        foundList = getCommentOfObjects(rows,attributeType,false);
         for (int i=0 ; i< foundList.size(); i ++){
             Attribute atr = new Attribute();
             String attribute = (String) foundList.get(i);
             attribute=attribute.trim();
-            String name=attribute.split(" ")[0];
+            int indexOfIs=attribute.indexOf("=");
+            int indexOfSpace=attribute.indexOf(" ");
+            int splitIndex=indexOfSpace;
+            if (indexOfIs >=0 && indexOfSpace > indexOfIs ){
+                splitIndex=indexOfIs;
+            }
+            String name=attribute.substring(0,splitIndex);
             String descr="";
             if (name.length()+1<attribute.length()){
-                descr=attribute.substring(name.length()+1);
+                descr=attribute.substring(splitIndex+1);
             }
             atr.setName(name);
             atr.setDescription(descr);
@@ -226,8 +236,8 @@ public class AsConfigDocParser {
         foundList = getCommentOfObjects(rows,exampleType,false);
         for (int i=0; i < foundList.size(); i++){
             //TODO:
-            //tag.addExample((String)foundList.get(i));
-        }
+            tag.addExample((String)foundList.get(i));
+        }        
         if (fd.getComponent()==null){
             fd.setComponent(new Component());
         }
@@ -251,11 +261,13 @@ public class AsConfigDocParser {
         for (int i=0 ; i < list.size(); i ++){
             method.addExample((String) list.get(i));
         }
+        //get the method params
         list= getCommentOfObjects(rows,paramType,false);
         for (int i=0 ; i < list.size(); i ++){
             Parameter param=createParam((String)list.get(i));
             method.addParameter(param);
         }
+        //get the returntype
         list =getCommentOfObjects(rows,returnType,false);
         if (list.size()>0){
             method.setReturn((String) list.get(0));

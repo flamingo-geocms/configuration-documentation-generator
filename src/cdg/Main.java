@@ -25,12 +25,14 @@ public class Main {
      */
     public static void main(String[] args) {
         try{
-            //File sourceDir = new File(args[0]);
-            //File destDir= new File(args[1]);
-           /* File sourceDir= new File("I:/dev/flamingoOfficialCore/fmc");
-            File destDir= new File("C:/temp/dest");     */
-            File sourceDir= new File("C:/dev/Flamingo_projects/official_core");
-            File destDir= new File("C:/temp/dest");
+            File sourceDir= new File("I:/dev/flamingoOfficialCore/fmc");
+            File destDir= new File("C:/temp/dest");     
+            if (args.length>1){
+                sourceDir = new File(args[0]);
+                destDir= new File(args[1]);
+            }
+            //File sourceDir= new File("C:/dev/Flamingo_projects/official_core");
+            //File destDir= new File("C:/temp/dest");
             
             AsConfigDocParser acdp = new AsConfigDocParser(sourceDir,destDir);
             acdp.generateDoc(sourceDir);

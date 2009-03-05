@@ -27,14 +27,14 @@ public class Attribute implements java.io.Serializable {
     //--------------------------/
 
     /**
-     * Field _name
-     */
-    private java.lang.String _name;
-
-    /**
      * Field _description
      */
     private java.lang.String _description;
+
+    /**
+     * Field _name
+     */
+    private java.lang.String _name;
 
 
       //----------------/
