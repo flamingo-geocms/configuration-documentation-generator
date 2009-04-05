@@ -54,13 +54,60 @@ public class AsConfigDocParser {
     private static String configcursorType="@configcursor";
     private File sourceDir;
     private File destDir;
+    private boolean flaExists=false;
+    private ArrayList filesToGenerate=null;
+    private ArrayList asFiles=null;
+    private ArrayList flaFiles=null;
     /** Creates a new instance of AsConfigDocParser */
-    public AsConfigDocParser(File source,File dest) {
+    public AsConfigDocParser(File source,File dest, boolean flaExists) {
+        setFlaExists(flaExists);
         setSourceDir(source);
         setDestDir(dest);
     }
+    public void generateDoc()throws IOException{
+        if (flaExists){            
+            createFileListForDoc();
+        }
+        generateDoc(sourceDir);
+    }
+    private void createFileListForDoc() throws IOException {
+        filesToGenerate=new ArrayList();
+        asFiles=new ArrayList();
+        flaFiles=new ArrayList();
+        checkForFla(sourceDir);
+        for (int i=0; i < asFiles.size(); i++){
+            String fileName=(String)asFiles.get(i);
+            String asName =fileName.substring(0,fileName.indexOf("."));
+            boolean addAsFile=false;
+            for (int b=0 ; b < flaFiles.size()&& !addAsFile ; b++){
+                String flaName=(String)flaFiles.get(b);
+                flaName =flaName.substring(0,flaName.indexOf("."));
+                if (asName.equalsIgnoreCase(flaName)){
+                    addAsFile=true;
+                }
+            }
+            if (addAsFile){
+                filesToGenerate.add(fileName);
+            }
+        }
+    }
+    private void checkForFla(File file) throws IOException{
+        if (file.isDirectory()){
+            File[] childFiles=file.listFiles();
+            for (int i=0; i < childFiles.length; i++){
+                checkForFla(childFiles[i]);
+            }
+        }else{
+            if (file.getName().toLowerCase().endsWith(".as")){
+                asFiles.add(file.getName().toLowerCase());
+            }else if (file.getName().toLowerCase().endsWith(".fla")){
+                flaFiles.add(file.getName().toLowerCase());
+            }
+        }
+    }
+    
     /**Start generating the doc.*/
-    public void generateDoc(File file) throws IOException{
+    private void generateDoc(File file) throws IOException{
         if (file.isDirectory()){
             File[] childFiles=file.listFiles();
             for (int i=0; i < childFiles.length; i++){
@@ -68,9 +115,11 @@ public class AsConfigDocParser {
             }
         }else{
             if (file.getName().toLowerCase().endsWith(".as")){
-                String newFileString=file.getName().substring(0,file.getName().length()-2)+"xml";
-                File newFile = new File(destDir,newFileString);
-                parseAsFile2Doc(file,newFile);
+                if (generateThisFile(file.getName())){
+                    String newFileString=file.getName().substring(0,file.getName().length()-2)+"xml";
+                    File newFile = new File(destDir,newFileString);
+                    parseAsFile2Doc(file,newFile);    
+                }                
             }
         }
     }
@@ -472,10 +521,25 @@ public class AsConfigDocParser {
     public void setDestDir(File destDir) {
         this.destDir = destDir;
     }
-    
-    private void setComponentFiles(Component c, BufferedReader reader) {
-        
+    public void setFlaExists(boolean flaExists){
+        this.flaExists=flaExists;
     }
+    public boolean getFlaExists(){
+        return flaExists;
+    }
+
+    private boolean generateThisFile(String fileName) {
+        if(!getFlaExists())
+            return true;
+        for (int i=0;i <filesToGenerate.size(); i ++){
+            String f = (String) filesToGenerate.get(i);
+            if(f.equalsIgnoreCase(fileName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     
     
 }
