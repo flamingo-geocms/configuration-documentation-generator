@@ -141,6 +141,7 @@ public class AsConfigDocParser {
         boolean doDelete=false;
         if (fd.getComponent()!=null && fd.getComponent().getName()!=null){
             Marshaller m = new Marshaller(writer);
+            m.addProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"mkcfgdoc.xsl\"");
             try {
                 m.marshal(fd);
                 System.out.println("Done: "+dest.getAbsolutePath());
