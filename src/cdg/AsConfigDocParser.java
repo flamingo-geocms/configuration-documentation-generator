@@ -58,6 +58,7 @@ public class AsConfigDocParser {
     private ArrayList filesToGenerate=null;
     private ArrayList asFiles=null;
     private ArrayList flaFiles=null;
+    private BufferedWriter indexWriter;
     /** Creates a new instance of AsConfigDocParser */
     public AsConfigDocParser(File source,File dest, boolean flaExists) {
         setFlaExists(flaExists);
@@ -68,7 +69,19 @@ public class AsConfigDocParser {
         if (flaExists){            
             createFileListForDoc();
         }
-        generateDoc(sourceDir);
+        File indexFile = new File(destDir,"index.html");
+        FileWriter fstream = new FileWriter(indexFile);
+
+        indexWriter = new BufferedWriter(fstream);
+        indexWriter.append("<html>\n<head>\n<title>Flamingo-mc Configuration Documentation</title>\n</head>\n<body>\n");
+        try{
+            generateDoc(sourceDir);
+        }catch(IOException ioe){
+            throw ioe;
+        }finally{        
+            indexWriter.append("\n</body>\n</html>");
+            indexWriter.close();
+        }
     }
     private void createFileListForDoc() throws IOException {
         filesToGenerate=new ArrayList();
@@ -118,14 +131,17 @@ public class AsConfigDocParser {
                 if (generateThisFile(file.getName())){
                     String newFileString=file.getName().substring(0,file.getName().length()-2)+"xml";
                     File newFile = new File(destDir,newFileString);
-                    parseAsFile2Doc(file,newFile);    
+                    boolean success=parseAsFile2Doc(file,newFile);    
+                    if (success){
+                        indexWriter.append("<a href=\""+newFileString+"\">"+(file.getName().substring(0,file.getName().length()-3))+"</a><br/>\n");
+                    }
                 }                
             }
         }
     }
     
     /**Parses the .as file to a doc file with destination dest*/
-    private void parseAsFile2Doc(File source, File dest) throws IOException {
+    private boolean parseAsFile2Doc(File source, File dest) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(dest));
         BufferedReader reader= new BufferedReader(new FileReader(source));
         Flamingodoc fd= new Flamingodoc();
@@ -157,6 +173,9 @@ public class AsConfigDocParser {
         writer.close();
         if (doDelete){
             dest.delete();
+            return false;
+        }else{
+            return true;
         }
     }
     
@@ -285,7 +304,11 @@ public class AsConfigDocParser {
             if (indexOfIs >=0 && indexOfSpace > indexOfIs ){
                 splitIndex=indexOfIs;
             }
-            String name=attribute.substring(0,splitIndex);
+            String name="";
+            if (splitIndex==-1)
+                name=attribute;
+            else
+                name=attribute.substring(0,splitIndex);
             String descr="";
             if (name.length()+1<attribute.length()){
                 descr=attribute.substring(splitIndex+1);

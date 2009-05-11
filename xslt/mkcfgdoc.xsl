@@ -3,6 +3,7 @@
 <xsl:template match="/">
 <xsl:variable name="returntype" select="@returntype"/>
 <html>
+<LINK href="style.css" rel="stylesheet" type="text/css"/>
 <body>
 <div class="blockTitle">Configuration Reference Guide</div>
 <div class="blockContent">
