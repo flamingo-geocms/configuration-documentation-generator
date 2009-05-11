@@ -1,0 +1,1 @@
+java build\classes\cdg\Main D:/dev_roy/flamingo/fmc D:/dev_roy/flamingo/doc
