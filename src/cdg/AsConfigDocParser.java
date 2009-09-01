@@ -73,7 +73,10 @@ public class AsConfigDocParser {
         FileWriter fstream = new FileWriter(indexFile);
 
         indexWriter = new BufferedWriter(fstream);
-        indexWriter.append("<html>\n<head>\n<title>Flamingo-mc Configuration Documentation</title>\n</head>\n<body>\n");
+        indexWriter.append("<html>\n"+
+                "<head>\n<title>Flamingo-mc Configuration Documentation</title>"+
+                "<link rel=\"stylesheet\" href=\"../../style.css\">"+
+                "\n</head>\n<body>\n");
         try{
             generateDoc(sourceDir);
         }catch(IOException ioe){
