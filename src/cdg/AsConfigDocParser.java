@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import nl.fmc.configuration.Attribute;
 import nl.fmc.configuration.Component;
@@ -58,6 +59,7 @@ public class AsConfigDocParser {
     private ArrayList filesToGenerate=null;
     private ArrayList asFiles=null;
     private ArrayList flaFiles=null;
+    private ArrayList<String> succesFiles=new ArrayList();
     private BufferedWriter indexWriter;
     /** Creates a new instance of AsConfigDocParser */
     public AsConfigDocParser(File source,File dest, boolean flaExists) {
@@ -81,7 +83,14 @@ public class AsConfigDocParser {
             generateDoc(sourceDir);
         }catch(IOException ioe){
             throw ioe;
-        }finally{        
+        }finally{
+            //sort the ahrefs.
+            String[] ahrefs = new String[succesFiles.size()];
+            succesFiles.toArray(ahrefs);
+            Arrays.sort(ahrefs);
+            for (int i=0; i < ahrefs.length; i++){
+                indexWriter.append(ahrefs[i]);
+            }
             indexWriter.append("\n</body>\n</html>");
             indexWriter.close();
         }
@@ -136,7 +145,7 @@ public class AsConfigDocParser {
                     File newFile = new File(destDir,newFileString);
                     boolean success=parseAsFile2Doc(file,newFile);    
                     if (success){
-                        indexWriter.append("<a href=\""+newFileString+"\">"+(file.getName().substring(0,file.getName().length()-3))+"</a><br/>\n");
+                        succesFiles.add("<a href=\""+newFileString+"\">"+(file.getName().substring(0,file.getName().length()-3))+"</a><br/>\n");                        
                     }
                 }                
             }
@@ -170,7 +179,7 @@ public class AsConfigDocParser {
                 ex.printStackTrace();                
             }
         }else{
-            System.out.println("Can't create xml: "+dest.getAbsolutePath());
+            System.out.println("Can't create xml: "+dest.getAbsolutePath()+" no @component found.");
             doDelete=true;
         }
         writer.close();
