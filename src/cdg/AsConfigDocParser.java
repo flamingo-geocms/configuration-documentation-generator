@@ -67,7 +67,7 @@ public class AsConfigDocParser {
         setSourceDir(source);
         setDestDir(dest);
     }
-    public void generateDoc()throws IOException{
+    public void generateDoc()throws IOException, Exception{
         if (flaExists){            
             createFileListForDoc();
         }
@@ -77,7 +77,7 @@ public class AsConfigDocParser {
         indexWriter = new BufferedWriter(fstream);
         indexWriter.append("<html>\n"+
                 "<head>\n<title>Flamingo-mc Configuration Documentation</title>"+
-                "<link rel=\"stylesheet\" href=\"../../style.css\">"+
+                "<link rel=\"stylesheet\" href=\"style.css\">"+
                 "\n</head>\n<body>\n");
         try{
             generateDoc(sourceDir);
@@ -89,11 +89,12 @@ public class AsConfigDocParser {
             succesFiles.toArray(ahrefs);
             Arrays.sort(ahrefs);
             for (int i=0; i < ahrefs.length; i++){
-                indexWriter.append(ahrefs[i]);
+                indexWriter.append("<div>"+ahrefs[i]+"</div>");
             }
             indexWriter.append("\n</body>\n</html>");
             indexWriter.close();
         }
+        System.out.println("Succesfully created documentation for "+succesFiles.size()+" components");
     }
     private void createFileListForDoc() throws IOException {
         filesToGenerate=new ArrayList();
@@ -132,7 +133,7 @@ public class AsConfigDocParser {
     }
     
     /**Start generating the doc.*/
-    private void generateDoc(File file) throws IOException{
+    private void generateDoc(File file) throws IOException, Exception{
         if (file.isDirectory()){
             File[] childFiles=file.listFiles();
             for (int i=0; i < childFiles.length; i++){
@@ -153,14 +154,14 @@ public class AsConfigDocParser {
     }
     
     /**Parses the .as file to a doc file with destination dest*/
-    private boolean parseAsFile2Doc(File source, File dest) throws IOException {
+    private boolean parseAsFile2Doc(File source, File dest) throws IOException, Exception{
         BufferedWriter writer = new BufferedWriter(new FileWriter(dest));
         BufferedReader reader= new BufferedReader(new FileReader(source));
         Flamingodoc fd= new Flamingodoc();
         setMetadata(fd);
         String thisLine=null;
         while ((thisLine = reader.readLine()) != null) { 
-            if (thisLine.indexOf("/**")>=0){
+            if (thisLine.indexOf("/**")==0){
                 ArrayList commentRows = readCommentBlock(thisLine,reader);
                 parseComment(commentRows,fd,reader);
             }
@@ -172,14 +173,14 @@ public class AsConfigDocParser {
             m.addProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"mkcfgdoc.xsl\"");
             try {
                 m.marshal(fd);
-                System.out.println("Done: "+dest.getAbsolutePath());
+                //System.out.println("Done: "+source.getAbsolutePath());
             } catch (Exception ex) {
-                System.out.println("Failed: "+dest.getAbsolutePath());
+                System.out.println("Failed: "+source.getAbsolutePath());
                 doDelete=true;
                 ex.printStackTrace();                
             }
         }else{
-            System.out.println("Can't create xml: "+dest.getAbsolutePath()+" no @component found.");
+            //System.out.println("Can't create xml: "+dest.getAbsolutePath()+" no @component found.");
             doDelete=true;
         }
         writer.close();
@@ -447,7 +448,10 @@ public class AsConfigDocParser {
             param.setName(paramString.substring(0,firstSemicolumnIndex));
             param.setType(paramString.substring(firstSemicolumnIndex+1,indexEndType));
         }else{
-            param.setName(paramString.substring(0,paramString.indexOf(" ")));
+            int indexNameEnd=paramString.indexOf(" ");
+            if (indexNameEnd==-1)
+                indexNameEnd=paramString.length();
+            param.setName(paramString.substring(0,indexNameEnd));
         }
         if (paramString.indexOf(" ")<paramString.length() && paramString.indexOf(" ")>=0){
             param.setDescription(paramString.substring(paramString.indexOf(" "),paramString.length()).trim());
@@ -531,13 +535,24 @@ public class AsConfigDocParser {
     }
     
     /**Reades the comment block to a ArrayList of strings (rows)*/
-    private ArrayList readCommentBlock(String thisLine,BufferedReader reader) throws IOException{
-        ArrayList block = new ArrayList();
-        thisLine=thisLine.trim();
-        if (!thisLine.endsWith("/**"))
-            block.add(new String(thisLine));
-        while ((thisLine = reader.readLine()).indexOf("*/") < 0) {
-            block.add(new String(thisLine));
+    private ArrayList readCommentBlock(String thisLine,BufferedReader reader) throws IOException, Exception{
+        ArrayList<String> block = new ArrayList<String>();
+        try{
+            thisLine=thisLine.trim();
+            if (!thisLine.endsWith("/**"))
+                block.add(new String(thisLine));
+            if (!thisLine.endsWith("*/")){
+                while ((thisLine = reader.readLine()).indexOf("*/") < 0) {
+                    block.add(new String(thisLine));
+                }
+            }
+        }catch(Exception e){
+            String sBlock="";
+            for (String s : block){
+                sBlock+="\n"+s;
+            }
+            System.out.print("Error while reading block: "+sBlock);
+            throw e;
         }
         return block;
     }

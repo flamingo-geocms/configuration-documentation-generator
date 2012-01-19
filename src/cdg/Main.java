@@ -27,19 +27,19 @@ public class Main {
         try{
             File sourceDir= new File("I:/dev/flamingoOfficialCore/fmc");
             File destDir= new File("C:/temp/dest");     
-            boolean onlyWithFla=true;
+            boolean onlyWithFla=false;
             if (args.length>1){
                 sourceDir = new File(args[0]);
                 destDir= new File(args[1]);
                 if (args.length >=3){
                    for (int i=2; i < args.length; i++){
-                        if (args[i].equalsIgnoreCase("-f")){
+                        /*if (args[i].equalsIgnoreCase("-f")){
                             onlyWithFla=false;
-                        }
+                        }*/
                    }                       
                 }
             }            
-            AsConfigDocParser acdp = new AsConfigDocParser(sourceDir,destDir,true);
+            AsConfigDocParser acdp = new AsConfigDocParser(sourceDir,destDir,onlyWithFla);
             acdp.generateDoc();
         }catch(Exception e){
             e.printStackTrace();
