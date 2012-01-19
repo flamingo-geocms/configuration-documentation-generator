@@ -89,7 +89,7 @@ public class AsConfigDocParser {
             succesFiles.toArray(ahrefs);
             Arrays.sort(ahrefs);
             for (int i=0; i < ahrefs.length; i++){
-                indexWriter.append("<div>"+ahrefs[i]+"</div>");
+                indexWriter.append("<div class=\"link\">"+ahrefs[i]+"</div>");
             }
             indexWriter.append("\n</body>\n</html>");
             indexWriter.close();
