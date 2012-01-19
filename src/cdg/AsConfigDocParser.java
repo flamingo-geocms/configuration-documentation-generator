@@ -78,7 +78,8 @@ public class AsConfigDocParser {
         indexWriter.append("<html>\n"+
                 "<head>\n<title>Flamingo-mc Configuration Documentation</title>"+
                 "<link rel=\"stylesheet\" href=\"style.css\">"+
-                "\n</head>\n<body>\n");
+                "\n</head>\n<body>\n<div class=\"blockContent\">"
+                + "\n<h1>Available Components</h1>");
         try{
             generateDoc(sourceDir);
         }catch(IOException ioe){
@@ -89,9 +90,9 @@ public class AsConfigDocParser {
             succesFiles.toArray(ahrefs);
             Arrays.sort(ahrefs);
             for (int i=0; i < ahrefs.length; i++){
-                indexWriter.append("<div class=\"link\">"+ahrefs[i]+"</div>");
+                indexWriter.append("<div class=\"link\">"+ahrefs[i]+"</div>\n");
             }
-            indexWriter.append("\n</body>\n</html>");
+            indexWriter.append("\n</div>\n</body>\n</html>");
             indexWriter.close();
         }
         System.out.println("Succesfully created documentation for "+succesFiles.size()+" components");
@@ -146,7 +147,7 @@ public class AsConfigDocParser {
                     File newFile = new File(destDir,newFileString);
                     boolean success=parseAsFile2Doc(file,newFile);    
                     if (success){
-                        succesFiles.add("<a href=\""+newFileString+"\">"+(file.getName().substring(0,file.getName().length()-3))+"</a><br/>\n");                        
+                        succesFiles.add("<a href=\""+newFileString+"\">"+(file.getName().substring(0,file.getName().length()-3))+"</a>");                        
                     }
                 }                
             }
