@@ -145,6 +145,10 @@ public class AsConfigDocParser {
                 if (generateThisFile(file.getName())){
                     String newFileString=file.getName().substring(0,file.getName().length()-2)+"xml";
                     File newFile = new File(destDir,newFileString);
+                    if (newFile.exists()){
+                        System.out.println("File: "+newFile.getAbsolutePath()+" already exists. Skipping: "+file.getAbsolutePath());
+                        return;
+                    }
                     boolean success=parseAsFile2Doc(file,newFile);    
                     if (success){
                         succesFiles.add("<a href=\""+newFileString+"\">"+(file.getName().substring(0,file.getName().length()-3))+"</a>");                        
