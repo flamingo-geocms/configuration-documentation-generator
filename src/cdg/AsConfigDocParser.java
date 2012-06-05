@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import nl.fmc.configuration.Attribute;
 import nl.fmc.configuration.Component;
@@ -59,7 +60,7 @@ public class AsConfigDocParser {
     private ArrayList filesToGenerate=null;
     private ArrayList asFiles=null;
     private ArrayList flaFiles=null;
-    private ArrayList<String> succesFiles=new ArrayList();
+    private ArrayList<Link> succesFiles=new ArrayList();
     private BufferedWriter indexWriter;
     /** Creates a new instance of AsConfigDocParser */
     public AsConfigDocParser(File source,File dest, boolean flaExists) {
@@ -86,7 +87,7 @@ public class AsConfigDocParser {
             throw ioe;
         }finally{
             //sort the ahrefs.
-            String[] ahrefs = new String[succesFiles.size()];
+            Link[] ahrefs = new Link[succesFiles.size()];
             succesFiles.toArray(ahrefs);
             Arrays.sort(ahrefs);
             for (int i=0; i < ahrefs.length; i++){
@@ -149,9 +150,9 @@ public class AsConfigDocParser {
                         System.out.println("File: "+newFile.getAbsolutePath()+" already exists. Skipping: "+file.getAbsolutePath());
                         return;
                     }
-                    boolean success=parseAsFile2Doc(file,newFile);    
-                    if (success){
-                        succesFiles.add("<a href=\""+newFileString+"\">"+(file.getName().substring(0,file.getName().length()-3))+"</a>");                        
+                    Flamingodoc fd=parseAsFile2Doc(file,newFile);    
+                    if (fd!=null){
+                        succesFiles.add(new Link(newFileString,fd.getComponent().getName()));                        
                     }
                 }                
             }
@@ -159,7 +160,7 @@ public class AsConfigDocParser {
     }
     
     /**Parses the .as file to a doc file with destination dest*/
-    private boolean parseAsFile2Doc(File source, File dest) throws IOException, Exception{
+    private Flamingodoc parseAsFile2Doc(File source, File dest) throws IOException, Exception{
         BufferedWriter writer = new BufferedWriter(new FileWriter(dest));
         BufferedReader reader= new BufferedReader(new FileReader(source));
         Flamingodoc fd= new Flamingodoc();
@@ -191,9 +192,9 @@ public class AsConfigDocParser {
         writer.close();
         if (doDelete){
             dest.delete();
-            return false;
+            return null;
         }else{
-            return true;
+            return fd;
         }
     }
     
